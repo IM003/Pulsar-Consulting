@@ -1,0 +1,1284 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pulsar Consulting — Transformez votre avenir numérique</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --navy: #0d1b3e;
+  --navy-light: #132248;
+  --navy-mid: #1a2f5a;
+  --orange: #e85d1a;
+  --orange-light: #f07340;
+  --orange-glow: rgba(232,93,26,0.15);
+  --white: #ffffff;
+  --off-white: #f4f6fb;
+  --text-muted: #8a9bbf;
+  --border: rgba(255,255,255,0.08);
+  --border-light: rgba(13,27,62,0.1);
+  --card-bg: rgba(255,255,255,0.03);
+}
+
+html { scroll-behavior: smooth; font-size: 16px; }
+body {
+  font-family: 'Outfit', sans-serif;
+  background: var(--navy);
+  color: var(--white);
+  overflow-x: hidden;
+  cursor: none;
+}
+
+/* ─── CURSOR ─── */
+#cur, #cur2 {
+  position: fixed; border-radius: 50%;
+  pointer-events: none; z-index: 9999;
+  transform: translate(-50%,-50%);
+  transition: width .3s, height .3s, background .3s, border-color .3s;
+}
+#cur { width:10px; height:10px; background:var(--orange); }
+#cur2 { width:44px; height:44px; border:1.5px solid rgba(232,93,26,.5); background:transparent; transition: all .18s ease; }
+body.hov #cur { width:16px; height:16px; background:#fff; }
+body.hov #cur2 { width:60px; height:60px; border-color:rgba(255,255,255,.3); }
+
+/* ─── SCROLLBAR ─── */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--navy); }
+::-webkit-scrollbar-thumb { background: var(--orange); border-radius: 2px; }
+
+/* ─── NAV ─── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 500;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1.4rem 5vw;
+  transition: background .4s, backdrop-filter .4s, border .4s;
+}
+nav.scrolled {
+  background: rgba(13,27,62,0.92);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+}
+.nav-logo {
+  display: flex; align-items: center; gap: .8rem; text-decoration: none;
+}
+.logo-icon {
+  width: 40px; height: 40px; position: relative;
+}
+/* SVG arrow logo */
+.nav-brand { font-family: 'Syne', sans-serif; font-size: 1.3rem; font-weight: 800; letter-spacing: .04em; }
+.nav-brand span { color: var(--orange); }
+.nav-links { display: flex; gap: 2.5rem; list-style: none; }
+.nav-links a {
+  color: rgba(255,255,255,.65); font-size: .85rem; font-weight: 500;
+  text-decoration: none; letter-spacing: .06em; text-transform: uppercase;
+  transition: color .2s; position: relative;
+}
+.nav-links a::after {
+  content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 2px;
+  background: var(--orange); transition: width .3s;
+}
+.nav-links a:hover { color: #fff; }
+.nav-links a:hover::after { width: 100%; }
+.nav-cta {
+  background: var(--orange); color: #fff; padding: .6rem 1.5rem;
+  border-radius: 4px; font-size: .82rem; font-weight: 600;
+  letter-spacing: .06em; text-transform: uppercase; text-decoration: none;
+  transition: background .2s, transform .2s; border: none; cursor: none;
+  clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px));
+}
+.nav-cta:hover { background: var(--orange-light); transform: translateY(-1px); }
+.hamburger { display: none; flex-direction: column; gap: 5px; cursor: none; background: none; border: none; padding: 4px; }
+.hamburger span { width: 24px; height: 2px; background: white; display: block; transition: all .3s; }
+
+/* ─── HERO ─── */
+.hero {
+  min-height: 100vh; display: flex; align-items: center;
+  padding: 8rem 5vw 6rem;
+  position: relative; overflow: hidden;
+}
+.hero-bg {
+  position: absolute; inset: 0; z-index: 0;
+  background:
+    radial-gradient(ellipse 70% 80% at 80% 20%, rgba(232,93,26,.12) 0%, transparent 55%),
+    radial-gradient(ellipse 60% 70% at 10% 90%, rgba(26,47,90,.8) 0%, transparent 60%),
+    linear-gradient(160deg, #0d1b3e 0%, #0a1530 100%);
+}
+/* Animated grid */
+.hero-grid {
+  position: absolute; inset: 0; z-index: 1;
+  background-image:
+    linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 80%);
+}
+.hero-orb {
+  position: absolute; border-radius: 50%;
+  filter: blur(80px); pointer-events: none; z-index: 0;
+  animation: float 8s ease-in-out infinite;
+}
+.orb1 { width:500px; height:500px; background:rgba(232,93,26,.08); right:-100px; top:-100px; }
+.orb2 { width:350px; height:350px; background:rgba(26,47,90,.6); left:-80px; bottom:0; animation-delay:-4s; }
+@keyframes float {
+  0%,100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-30px) scale(1.05); }
+}
+
+.hero-inner { position: relative; z-index: 2; max-width: 780px; }
+
+.hero-badge {
+  display: inline-flex; align-items: center; gap: .6rem;
+  background: rgba(232,93,26,.12); border: 1px solid rgba(232,93,26,.3);
+  padding: .45rem 1rem; border-radius: 100px;
+  font-size: .75rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase;
+  color: var(--orange-light); margin-bottom: 2rem;
+  opacity: 0; animation: slideUp .7s .1s forwards;
+}
+.hero-badge .pulse-dot {
+  width: 7px; height: 7px; background: var(--orange); border-radius: 50%;
+  animation: pulseDot 2s infinite;
+}
+@keyframes pulseDot {
+  0%,100% { box-shadow: 0 0 0 0 rgba(232,93,26,.5); }
+  50% { box-shadow: 0 0 0 6px rgba(232,93,26,0); }
+}
+
+.hero h1 {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(3rem, 6.5vw, 6.5rem);
+  font-weight: 800; line-height: .95; letter-spacing: -.03em;
+  opacity: 0; animation: slideUp .8s .25s forwards;
+}
+.hero h1 .line2 { color: transparent; -webkit-text-stroke: 1.5px rgba(255,255,255,.35); }
+.hero h1 .accent { color: var(--orange); }
+
+.hero-sub {
+  margin-top: 2rem; font-size: 1.1rem; line-height: 1.75;
+  color: rgba(255,255,255,.55); max-width: 500px;
+  opacity: 0; animation: slideUp .8s .45s forwards;
+}
+
+.hero-actions {
+  display: flex; gap: 1rem; margin-top: 3rem; flex-wrap: wrap;
+  opacity: 0; animation: slideUp .8s .6s forwards;
+}
+.btn-primary {
+  background: var(--orange); color: white;
+  padding: 1rem 2.2rem; border-radius: 6px;
+  font-family: 'Outfit', sans-serif; font-size: .9rem; font-weight: 600;
+  letter-spacing: .04em; text-decoration: none; border: none; cursor: none;
+  transition: all .25s; display: inline-flex; align-items: center; gap: .5rem;
+  clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+}
+.btn-primary:hover { background: var(--orange-light); transform: translateY(-3px); box-shadow: 0 20px 40px rgba(232,93,26,.3); }
+.btn-outline {
+  background: transparent; color: white;
+  padding: 1rem 2.2rem; border-radius: 6px;
+  font-size: .9rem; font-weight: 600;
+  letter-spacing: .04em; text-decoration: none;
+  border: 1.5px solid rgba(255,255,255,.2); cursor: none;
+  transition: all .25s; display: inline-flex; align-items: center; gap: .5rem;
+}
+.btn-outline:hover { border-color: rgba(255,255,255,.6); background: rgba(255,255,255,.05); transform: translateY(-3px); }
+
+.hero-stats {
+  display: flex; gap: 3rem; margin-top: 5rem; flex-wrap: wrap;
+  opacity: 0; animation: slideUp .8s .8s forwards;
+}
+.hero-stat { }
+.hero-stat .num {
+  font-family: 'Syne', sans-serif; font-size: 2.5rem; font-weight: 800;
+  color: white; line-height: 1;
+}
+.hero-stat .num span { color: var(--orange); }
+.hero-stat .lbl { font-size: .8rem; color: var(--text-muted); margin-top: .2rem; letter-spacing: .06em; text-transform: uppercase; }
+
+/* Scroll indicator */
+.scroll-hint {
+  position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%);
+  display: flex; flex-direction: column; align-items: center; gap: .5rem;
+  color: var(--text-muted); font-size: .7rem; letter-spacing: .15em; text-transform: uppercase;
+  z-index: 2;
+  opacity: 0; animation: fadeIn 1s 1.5s forwards;
+}
+.scroll-arrow { width: 1px; height: 50px; background: linear-gradient(to bottom, transparent, var(--orange)); animation: scrollArrow 2s ease-in-out infinite; }
+@keyframes scrollArrow { 0% { transform: scaleY(0); transform-origin: top; } 50% { transform: scaleY(1); transform-origin: top; } 51% { transform-origin: bottom; } 100% { transform: scaleY(0); transform-origin: bottom; } }
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(35px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn { to { opacity: 1; } }
+
+/* ─── TRUSTED BY ─── */
+.trust-bar {
+  border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+  padding: 2rem 5vw;
+  display: flex; align-items: center; gap: 3rem; overflow: hidden;
+}
+.trust-label { font-size: .72rem; color: var(--text-muted); letter-spacing: .15em; text-transform: uppercase; white-space: nowrap; }
+.trust-divider { width: 1px; height: 30px; background: var(--border); flex-shrink: 0; }
+.trust-logos { display: flex; gap: 3.5rem; align-items: center; overflow: hidden; }
+.trust-logo {
+  font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700;
+  color: rgba(255,255,255,.2); letter-spacing: .1em; white-space: nowrap;
+  transition: color .3s;
+}
+.trust-logo:hover { color: rgba(255,255,255,.5); }
+
+/* ─── SECTION BASE ─── */
+section { padding: 7rem 5vw; }
+.section-tag {
+  display: inline-flex; align-items: center; gap: .5rem;
+  font-size: .72rem; font-weight: 600; letter-spacing: .2em; text-transform: uppercase;
+  color: var(--orange); margin-bottom: 1rem;
+}
+.section-tag::before { content: ''; width: 24px; height: 2px; background: var(--orange); }
+h2.section-title {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(2.2rem, 4vw, 4rem);
+  font-weight: 800; line-height: 1.05; letter-spacing: -.02em;
+}
+h2.section-title span { color: var(--orange); }
+.section-sub { font-size: 1rem; color: var(--text-muted); line-height: 1.75; margin-top: 1rem; max-width: 550px; }
+
+/* Reveal animation */
+.reveal { opacity: 0; transform: translateY(40px); transition: opacity .7s ease, transform .7s ease; }
+.reveal.in { opacity: 1; transform: translateY(0); }
+.reveal-delay-1 { transition-delay: .1s; }
+.reveal-delay-2 { transition-delay: .2s; }
+.reveal-delay-3 { transition-delay: .3s; }
+.reveal-delay-4 { transition-delay: .4s; }
+
+/* ─── SERVICES ─── */
+.services { background: var(--navy); }
+.services-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 4rem; flex-wrap: wrap; gap: 1.5rem; }
+.services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5px; }
+
+.service-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  padding: 2.5rem; position: relative; overflow: hidden;
+  transition: all .35s; cursor: none;
+  border-radius: 2px;
+}
+.service-card::before {
+  content: ''; position: absolute; bottom: 0; left: 0; right: 0;
+  height: 3px; background: var(--orange);
+  transform: scaleX(0); transition: transform .4s;
+}
+.service-card::after {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(ellipse 80% 80% at 50% 100%, rgba(232,93,26,.06), transparent);
+  opacity: 0; transition: opacity .4s;
+}
+.service-card:hover { border-color: rgba(232,93,26,.2); transform: translateY(-6px); box-shadow: 0 30px 60px rgba(0,0,0,.3); }
+.service-card:hover::before { transform: scaleX(1); }
+.service-card:hover::after { opacity: 1; }
+.service-card:hover .service-num { color: var(--orange); }
+
+.service-num { font-family: 'Syne', sans-serif; font-size: 3rem; font-weight: 800; color: rgba(255,255,255,.04); line-height: 1; margin-bottom: -.5rem; transition: color .3s; }
+.service-icon { font-size: 2rem; margin: .8rem 0; }
+.service-name { font-family: 'Syne', sans-serif; font-size: 1.3rem; font-weight: 700; margin-bottom: .8rem; }
+.service-desc { font-size: .88rem; color: var(--text-muted); line-height: 1.7; }
+.service-tags { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: 1.5rem; }
+.stag {
+  font-size: .7rem; padding: .3rem .7rem; border-radius: 100px;
+  border: 1px solid rgba(255,255,255,.1); color: rgba(255,255,255,.4);
+  letter-spacing: .06em;
+}
+
+/* ─── FEATURES ─── */
+.features { background: linear-gradient(180deg, var(--navy) 0%, #081022 100%); }
+.features-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; margin-top: 4rem; }
+.feature-visual {
+  position: relative; height: 520px;
+  background: var(--navy-light); border: 1px solid var(--border);
+  border-radius: 16px; overflow: hidden; display: flex; align-items: center; justify-content: center;
+}
+.feature-visual-inner {
+  position: relative; width: 280px; height: 280px;
+}
+.feature-ring {
+  position: absolute; border-radius: 50%; border: 1px solid;
+  display: flex; align-items: center; justify-content: center;
+  animation: spin linear infinite;
+}
+.ring1 { inset: 0; border-color: rgba(232,93,26,.2); animation-duration: 20s; }
+.ring2 { inset: 30px; border-color: rgba(255,255,255,.06); animation-duration: 15s; animation-direction: reverse; }
+.ring3 { inset: 60px; border-color: rgba(232,93,26,.1); animation-duration: 10s; }
+@keyframes spin { from { transform: rotate(0); } to { transform: rotate(360deg); } }
+.ring-center {
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+  width: 80px; height: 80px; background: var(--orange);
+  border-radius: 12px; display: flex; align-items: center; justify-content: center;
+  font-size: 2rem; box-shadow: 0 0 60px rgba(232,93,26,.4);
+}
+.ring-dot {
+  position: absolute; width: 10px; height: 10px; background: var(--orange);
+  border-radius: 50%; box-shadow: 0 0 10px rgba(232,93,26,.8);
+}
+.rd1 { top: -5px; left: 50%; transform: translateX(-50%); }
+.rd2 { bottom: -5px; right: 20%; }
+.rd3 { left: -5px; top: 40%; }
+
+.feature-list { list-style: none; display: flex; flex-direction: column; gap: 1.5rem; }
+.feature-item {
+  display: flex; gap: 1.2rem; align-items: flex-start;
+  padding: 1.5rem; border: 1px solid var(--border);
+  border-radius: 8px; transition: all .3s; cursor: none;
+}
+.feature-item:hover { border-color: rgba(232,93,26,.25); background: rgba(232,93,26,.03); }
+.feature-icon-box {
+  width: 44px; height: 44px; flex-shrink: 0;
+  background: rgba(232,93,26,.1); border-radius: 8px;
+  display: flex; align-items: center; justify-content: center; font-size: 1.2rem;
+}
+.feature-item h4 { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700; margin-bottom: .3rem; }
+.feature-item p { font-size: .85rem; color: var(--text-muted); line-height: 1.65; }
+
+/* ─── PROCESS ─── */
+.process { background: #081022; }
+.process-steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; margin-top: 5rem; position: relative; }
+.process-steps::before {
+  content: ''; position: absolute; top: 2.5rem; left: 12%; right: 12%;
+  height: 1px; background: linear-gradient(to right, var(--orange), transparent, var(--orange));
+  z-index: 0; opacity: .3;
+}
+.process-step { text-align: center; padding: 0 1.5rem; position: relative; }
+.step-circle {
+  width: 56px; height: 56px; margin: 0 auto 1.5rem;
+  background: var(--navy-light); border: 2px solid var(--orange);
+  border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  font-family: 'Syne', sans-serif; font-size: 1.1rem; font-weight: 800; color: var(--orange);
+  position: relative; z-index: 1;
+  transition: all .3s;
+}
+.process-step:hover .step-circle { background: var(--orange); color: white; box-shadow: 0 0 30px rgba(232,93,26,.4); }
+.step-title { font-family: 'Syne', sans-serif; font-size: 1.05rem; font-weight: 700; margin-bottom: .6rem; }
+.step-desc { font-size: .83rem; color: var(--text-muted); line-height: 1.65; }
+
+/* ─── PRICING ─── */
+.pricing { background: var(--navy); }
+.pricing-header { text-align: center; margin-bottom: 4rem; }
+.pricing-header .section-tag { justify-content: center; }
+.pricing-header .section-sub { margin: 0 auto; }
+.pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+
+.price-card {
+  background: var(--card-bg); border: 1px solid var(--border);
+  border-radius: 16px; padding: 2.5rem;
+  position: relative; overflow: hidden; transition: all .35s; cursor: none;
+}
+.price-card.featured {
+  background: linear-gradient(135deg, var(--navy-light), var(--navy-mid));
+  border-color: var(--orange);
+  box-shadow: 0 0 60px rgba(232,93,26,.15);
+  transform: scale(1.03);
+}
+.price-card:not(.featured):hover { border-color: rgba(255,255,255,.2); transform: translateY(-6px); box-shadow: 0 30px 60px rgba(0,0,0,.3); }
+.featured-badge {
+  position: absolute; top: 1.5rem; right: 1.5rem;
+  background: var(--orange); color: white; font-size: .68rem;
+  font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+  padding: .3rem .8rem; border-radius: 100px;
+}
+.price-plan { font-size: .75rem; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; color: var(--orange); margin-bottom: .8rem; }
+.price-value {
+  font-family: 'Syne', sans-serif; font-size: 3.5rem; font-weight: 800;
+  line-height: 1; margin-bottom: .3rem;
+}
+.price-value sup { font-size: 1.5rem; vertical-align: super; }
+.price-value span { font-size: 1rem; font-weight: 400; color: var(--text-muted); }
+.price-period { font-size: .82rem; color: var(--text-muted); margin-bottom: 1.5rem; }
+.price-divider { height: 1px; background: var(--border); margin: 1.5rem 0; }
+.price-features { list-style: none; display: flex; flex-direction: column; gap: .8rem; margin-bottom: 2rem; }
+.price-features li {
+  display: flex; align-items: flex-start; gap: .7rem;
+  font-size: .88rem; color: rgba(255,255,255,.75); line-height: 1.5;
+}
+.price-features li .check { color: var(--orange); flex-shrink: 0; font-size: .9rem; margin-top: .1rem; }
+.price-features li.disabled { opacity: .35; text-decoration: line-through; }
+
+.btn-plan {
+  width: 100%; padding: .9rem; border-radius: 8px; font-family: 'Outfit', sans-serif;
+  font-size: .9rem; font-weight: 600; letter-spacing: .04em; cursor: none;
+  transition: all .25s; text-align: center; display: block; text-decoration: none;
+}
+.btn-plan-outline { background: transparent; border: 1.5px solid rgba(255,255,255,.2); color: white; }
+.btn-plan-outline:hover { border-color: var(--orange); color: var(--orange); }
+.btn-plan-solid { background: var(--orange); border: none; color: white; }
+.btn-plan-solid:hover { background: var(--orange-light); box-shadow: 0 12px 30px rgba(232,93,26,.4); transform: translateY(-2px); }
+
+/* ─── OFFER FORM ─── */
+.offer-section {
+  background: linear-gradient(135deg, #081022 0%, var(--navy) 100%);
+  position: relative; overflow: hidden;
+}
+.offer-section::before {
+  content: ''; position: absolute; inset: 0;
+  background-image: linear-gradient(rgba(232,93,26,.03) 1px, transparent 1px), linear-gradient(90deg, rgba(232,93,26,.03) 1px, transparent 1px);
+  background-size: 50px 50px;
+}
+.offer-inner { position: relative; z-index: 1; }
+.offer-grid { display: grid; grid-template-columns: 1fr 1.4fr; gap: 6rem; align-items: start; }
+.offer-left h2 { font-size: clamp(2rem, 3.5vw, 3.5rem); }
+.offer-left p { color: var(--text-muted); line-height: 1.75; margin-top: 1.2rem; }
+
+.offer-perks { margin-top: 2.5rem; display: flex; flex-direction: column; gap: 1rem; }
+.perk { display: flex; align-items: center; gap: 1rem; font-size: .9rem; }
+.perk-dot { width: 36px; height: 36px; background: rgba(232,93,26,.1); border: 1px solid rgba(232,93,26,.2); border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 1rem; }
+
+/* FORM */
+.offer-form {
+  background: rgba(255,255,255,.02);
+  border: 1px solid var(--border);
+  border-radius: 20px; padding: 3rem;
+  backdrop-filter: blur(10px);
+}
+.form-title { font-family: 'Syne', sans-serif; font-size: 1.4rem; font-weight: 700; margin-bottom: .4rem; }
+.form-subtitle { font-size: .85rem; color: var(--text-muted); margin-bottom: 2.5rem; }
+
+/* Offer selector */
+.offer-selector { margin-bottom: 2rem; }
+.offer-label { font-size: .75rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--text-muted); margin-bottom: .8rem; display: block; }
+.offer-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: .7rem; }
+.offer-opt {
+  position: relative; cursor: none;
+}
+.offer-opt input { position: absolute; opacity: 0; pointer-events: none; }
+.offer-opt label {
+  display: block; padding: .9rem .7rem; border: 1.5px solid var(--border);
+  border-radius: 10px; text-align: center; cursor: none; transition: all .25s;
+}
+.offer-opt label .opt-icon { font-size: 1.4rem; display: block; margin-bottom: .3rem; }
+.offer-opt label .opt-name { font-size: .78rem; font-weight: 600; display: block; }
+.offer-opt label .opt-price { font-size: .7rem; color: var(--text-muted); display: block; margin-top: .1rem; }
+.offer-opt input:checked + label {
+  border-color: var(--orange);
+  background: rgba(232,93,26,.08);
+}
+.offer-opt input:checked + label .opt-name { color: var(--orange); }
+.offer-opt label:hover { border-color: rgba(255,255,255,.2); }
+
+/* Form fields */
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.form-group { margin-bottom: 1.2rem; }
+.form-group label { font-size: .75rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--text-muted); display: block; margin-bottom: .5rem; }
+.form-group input, .form-group select, .form-group textarea {
+  width: 100%; padding: .85rem 1rem;
+  background: rgba(255,255,255,.04); border: 1.5px solid rgba(255,255,255,.1);
+  border-radius: 8px; color: white; font-family: 'Outfit', sans-serif; font-size: .9rem;
+  outline: none; transition: border-color .2s; cursor: none;
+}
+.form-group input::placeholder, .form-group textarea::placeholder { color: rgba(255,255,255,.25); }
+.form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--orange); background: rgba(232,93,26,.03); }
+.form-group select { -webkit-appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='%238a9bbf'%3E%3Cpath d='M6 8L0 0h12z'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 1rem center; cursor: none; }
+.form-group select option { background: #0d1b3e; }
+.form-group textarea { resize: none; height: 90px; }
+
+.form-submit {
+  width: 100%; padding: 1.05rem;
+  background: var(--orange); border: none;
+  border-radius: 8px; color: white; font-family: 'Outfit', sans-serif;
+  font-size: .95rem; font-weight: 600; letter-spacing: .04em;
+  cursor: none; transition: all .3s; display: flex; align-items: center; justify-content: center; gap: .6rem;
+  margin-top: .5rem;
+  clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
+}
+.form-submit:hover { background: var(--orange-light); transform: translateY(-2px); box-shadow: 0 20px 40px rgba(232,93,26,.3); }
+.form-note { font-size: .74rem; color: var(--text-muted); text-align: center; margin-top: 1rem; }
+
+/* Success message */
+.form-success {
+  display: none; text-align: center; padding: 3rem 1.5rem;
+}
+.form-success .success-icon { font-size: 3rem; margin-bottom: 1rem; }
+.form-success h3 { font-family: 'Syne', sans-serif; font-size: 1.5rem; font-weight: 700; margin-bottom: .5rem; }
+.form-success p { color: var(--text-muted); font-size: .9rem; }
+
+/* ─── TESTIMONIALS ─── */
+.testimonials { background: #081022; overflow: hidden; }
+.testi-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 3.5rem; flex-wrap: wrap; gap: 1.5rem; }
+.testi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+.testi-card {
+  background: rgba(255,255,255,.02); border: 1px solid var(--border);
+  border-radius: 14px; padding: 2rem; transition: all .3s; cursor: none;
+}
+.testi-card:hover { border-color: rgba(232,93,26,.2); transform: translateY(-4px); }
+.testi-stars { color: var(--orange); font-size: .9rem; margin-bottom: 1rem; letter-spacing: .2em; }
+.testi-text { font-size: .9rem; color: rgba(255,255,255,.65); line-height: 1.75; margin-bottom: 1.5rem; font-style: italic; }
+.testi-author { display: flex; align-items: center; gap: .8rem; }
+.testi-avatar {
+  width: 40px; height: 40px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Syne', sans-serif; font-weight: 800; font-size: .9rem;
+  flex-shrink: 0;
+}
+.av1 { background: linear-gradient(135deg, var(--orange), #ff8c50); }
+.av2 { background: linear-gradient(135deg, #1e5fa8, #3387d6); }
+.av3 { background: linear-gradient(135deg, #14855e, #22c485); }
+.testi-name { font-size: .88rem; font-weight: 600; }
+.testi-role { font-size: .75rem; color: var(--text-muted); }
+
+/* ─── FAQ ─── */
+.faq { background: var(--navy); }
+.faq-inner { max-width: 780px; margin: 0 auto; }
+.faq-header { text-align: center; margin-bottom: 3.5rem; }
+.faq-header .section-sub { margin: 0 auto; }
+.faq-list { display: flex; flex-direction: column; gap: .8rem; }
+.faq-item {
+  border: 1px solid var(--border); border-radius: 10px; overflow: hidden;
+  transition: border-color .2s;
+}
+.faq-item.open { border-color: rgba(232,93,26,.3); }
+.faq-q {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 1.4rem 1.5rem; cursor: none; font-weight: 600;
+  font-size: .95rem; user-select: none;
+  transition: color .2s;
+}
+.faq-q:hover { color: var(--orange-light); }
+.faq-icon {
+  width: 28px; height: 28px; flex-shrink: 0;
+  border: 1.5px solid rgba(255,255,255,.15); border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: .85rem; transition: all .3s; color: var(--text-muted);
+}
+.faq-item.open .faq-icon { background: var(--orange); border-color: var(--orange); color: white; transform: rotate(45deg); }
+.faq-a { max-height: 0; overflow: hidden; transition: max-height .4s ease, padding .4s; }
+.faq-item.open .faq-a { max-height: 300px; }
+.faq-a-inner { padding: 0 1.5rem 1.4rem; font-size: .88rem; color: var(--text-muted); line-height: 1.75; }
+
+/* ─── CTA BANNER ─── */
+.cta-banner {
+  background: linear-gradient(135deg, var(--orange) 0%, #c94800 100%);
+  padding: 6rem 5vw; text-align: center; position: relative; overflow: hidden;
+}
+.cta-banner::before {
+  content: ''; position: absolute; inset: 0;
+  background-image: radial-gradient(circle at 20% 50%, rgba(255,255,255,.08) 0%, transparent 40%),
+                    radial-gradient(circle at 80% 50%, rgba(0,0,0,.1) 0%, transparent 40%);
+}
+.cta-banner > * { position: relative; z-index: 1; }
+.cta-banner h2 { font-family: 'Syne', sans-serif; font-size: clamp(2.5rem, 5vw, 5rem); font-weight: 800; letter-spacing: -.02em; margin-bottom: 1rem; }
+.cta-banner p { font-size: 1.05rem; opacity: .85; margin-bottom: 2.5rem; max-width: 500px; margin-left: auto; margin-right: auto; }
+.btn-white { background: white; color: var(--orange); padding: 1rem 2.5rem; border-radius: 8px; font-size: .95rem; font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: .5rem; transition: all .25s; cursor: none; }
+.btn-white:hover { transform: translateY(-3px); box-shadow: 0 20px 40px rgba(0,0,0,.2); }
+
+/* ─── FOOTER ─── */
+footer {
+  background: #060e1e;
+  border-top: 1px solid var(--border);
+  padding: 4.5rem 5vw 2rem;
+}
+.footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3.5rem; margin-bottom: 4rem; }
+.footer-brand { font-family: 'Syne', sans-serif; font-size: 1.3rem; font-weight: 800; margin-bottom: 1rem; }
+.footer-brand span { color: var(--orange); }
+.footer-desc { font-size: .85rem; color: var(--text-muted); line-height: 1.75; margin-bottom: 1.5rem; }
+.footer-social { display: flex; gap: .8rem; }
+.soc-btn {
+  width: 36px; height: 36px; border: 1px solid var(--border); border-radius: 8px;
+  display: flex; align-items: center; justify-content: center; font-size: .85rem;
+  color: var(--text-muted); text-decoration: none; transition: all .2s; cursor: none;
+}
+.soc-btn:hover { border-color: var(--orange); color: var(--orange); background: rgba(232,93,26,.08); }
+.footer-col h4 { font-family: 'Syne', sans-serif; font-size: .9rem; font-weight: 700; margin-bottom: 1.2rem; }
+.footer-col ul { list-style: none; display: flex; flex-direction: column; gap: .7rem; }
+.footer-col ul a { font-size: .83rem; color: var(--text-muted); text-decoration: none; transition: color .2s; }
+.footer-col ul a:hover { color: var(--orange); }
+.footer-bottom { border-top: 1px solid var(--border); padding-top: 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+.footer-bottom p { font-size: .78rem; color: var(--text-muted); }
+.footer-badges { display: flex; gap: 1rem; }
+.badge { font-size: .7rem; padding: .3rem .8rem; border: 1px solid var(--border); border-radius: 100px; color: var(--text-muted); }
+
+/* Mobile nav */
+.mobile-menu {
+  display: none; position: fixed; inset: 0; z-index: 490;
+  background: rgba(13,27,62,.98); backdrop-filter: blur(20px);
+  flex-direction: column; align-items: center; justify-content: center; gap: 2rem;
+}
+.mobile-menu.open { display: flex; }
+.mobile-menu a { font-family: 'Syne', sans-serif; font-size: 2rem; font-weight: 700; color: white; text-decoration: none; }
+.mobile-menu a:hover { color: var(--orange); }
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 1100px) {
+  .services-grid { grid-template-columns: repeat(2, 1fr); }
+  .pricing-grid { grid-template-columns: 1fr; max-width: 500px; margin: 0 auto; }
+  .price-card.featured { transform: none; }
+}
+@media (max-width: 900px) {
+  nav { padding: 1.2rem 4vw; }
+  .nav-links, .nav-cta { display: none; }
+  .hamburger { display: flex; }
+  section { padding: 5rem 5vw; }
+  .hero { padding: 7rem 5vw 5rem; }
+  .hero-stats { gap: 2rem; }
+  .services-grid { grid-template-columns: 1fr; }
+  .features-grid { grid-template-columns: 1fr; }
+  .feature-visual { height: 350px; }
+  .process-steps { grid-template-columns: repeat(2, 1fr); gap: 2.5rem; }
+  .process-steps::before { display: none; }
+  .offer-grid { grid-template-columns: 1fr; gap: 3rem; }
+  .testi-grid { grid-template-columns: 1fr; }
+  .footer-grid { grid-template-columns: 1fr 1fr; gap: 2.5rem; }
+  .form-row { grid-template-columns: 1fr; }
+  .offer-cards { grid-template-columns: repeat(2, 1fr); }
+  .trust-logos { gap: 2rem; }
+}
+@media (max-width: 600px) {
+  .hero h1 { font-size: 3rem; }
+  .hero-stats { flex-direction: column; gap: 1.5rem; }
+  .footer-grid { grid-template-columns: 1fr; }
+  .offer-cards { grid-template-columns: 1fr; }
+  body { cursor: auto; }
+  #cur, #cur2 { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- Cursors -->
+<div id="cur"></div>
+<div id="cur2"></div>
+
+<!-- ══════════════ NAV ══════════════ -->
+<nav id="mainNav">
+  <a href="#" class="nav-logo">
+    <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+      <path d="M8 32 L20 8 L26 18 L32 8" stroke="#e85d1a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M8 32 L20 8" fill="none"/>
+      <polygon points="14,32 20,8 26,18" fill="#e85d1a" opacity=".9"/>
+      <polygon points="26,18 32,8 32,32" fill="white" opacity=".8"/>
+    </svg>
+    <span class="nav-brand">PULSAR <span>Consulting.</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#process">Processus</a></li>
+    <li><a href="#pricing">Tarifs</a></li>
+    <li><a href="#testi">Clients</a></li>
+    <li><a href="#faq">FAQ</a></li>
+  </ul>
+  <a href="#offre" class="nav-cta">Choisir une offre →</a>
+  <button class="hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- Mobile menu -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#services" class="mm-link">Services</a>
+  <a href="#pricing" class="mm-link">Tarifs</a>
+  <a href="#offre" class="mm-link" style="color:var(--orange)">Choisir une offre</a>
+</div>
+
+<!-- ══════════════ HERO ══════════════ -->
+<section class="hero" id="home">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-orb orb1"></div>
+  <div class="hero-orb orb2"></div>
+
+  <div class="hero-inner">
+    <div class="hero-badge">
+      <span class="pulse-dot"></span>
+      Entreprise de Services du Numérique
+    </div>
+    <h1>
+      Accélérez votre<br>
+      <span class="line2">TRANSFORMATION</span><br>
+      <span class="accent">DIGITALE.</span>
+    </h1>
+    <p class="hero-sub">Pulsar Consulting vous accompagne dans chaque étape de votre transition numérique — stratégie, développement, infrastructure et cybersécurité.</p>
+    <div class="hero-actions">
+      <a href="#offre" class="btn-primary">Choisir mon offre <span>→</span></a>
+      <a href="#services" class="btn-outline">Découvrir nos services</a>
+    </div>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <div class="num">200<span>+</span></div>
+        <div class="lbl">Projets livrés</div>
+      </div>
+      <div class="hero-stat">
+        <div class="num">98<span>%</span></div>
+        <div class="lbl">Satisfaction client</div>
+      </div>
+      <div class="hero-stat">
+        <div class="num">10<span>+</span></div>
+        <div class="lbl">Années d'expertise</div>
+      </div>
+      <div class="hero-stat">
+        <div class="num">50<span>+</span></div>
+        <div class="lbl">Experts dédiés</div>
+      </div>
+    </div>
+  </div>
+  <div class="scroll-hint">
+    <div class="scroll-arrow"></div>
+    Scroll
+  </div>
+</section>
+
+<!-- ══════════════ TRUST BAR ══════════════ -->
+<div class="trust-bar">
+  <span class="trust-label">Ils nous font confiance</span>
+  <div class="trust-divider"></div>
+  <div class="trust-logos">
+    <span class="trust-logo">NEXOTECH</span>
+    <span class="trust-logo">ATLAGROUP</span>
+    <span class="trust-logo">MERIDIAN</span>
+    <span class="trust-logo">ORBIS CO.</span>
+    <span class="trust-logo">DATASTORM</span>
+    <span class="trust-logo">VELTRIX</span>
+  </div>
+</div>
+
+<!-- ══════════════ SERVICES ══════════════ -->
+<section class="services" id="services">
+  <div class="services-header">
+    <div>
+      <div class="section-tag reveal">Nos expertises</div>
+      <h2 class="section-title reveal">Des solutions numériques<br><span>sur mesure</span></h2>
+    </div>
+    <p class="section-sub reveal" style="max-width:360px;text-align:right">De la stratégie à l'exécution, nous couvrons tout le spectre du numérique.</p>
+  </div>
+  <div class="services-grid">
+    <div class="service-card reveal reveal-delay-1">
+      <div class="service-num">01</div>
+      <div class="service-icon">🏗️</div>
+      <div class="service-name">Développement Web & Mobile</div>
+      <div class="service-desc">Applications web performantes, apps mobiles iOS/Android et plateformes SaaS construites avec les meilleures technologies actuelles.</div>
+      <div class="service-tags"><span class="stag">React</span><span class="stag">Node.js</span><span class="stag">Flutter</span><span class="stag">API REST</span></div>
+    </div>
+    <div class="service-card reveal reveal-delay-2">
+      <div class="service-num">02</div>
+      <div class="service-icon">☁️</div>
+      <div class="service-name">Cloud & Infrastructure</div>
+      <div class="service-desc">Migration cloud, architecture scalable, DevOps et gestion d'infrastructure pour une disponibilité maximale de vos services.</div>
+      <div class="service-tags"><span class="stag">AWS</span><span class="stag">Azure</span><span class="stag">Kubernetes</span><span class="stag">CI/CD</span></div>
+    </div>
+    <div class="service-card reveal reveal-delay-3">
+      <div class="service-num">03</div>
+      <div class="service-icon">🤖</div>
+      <div class="service-name">Intelligence Artificielle</div>
+      <div class="service-desc">Intégration d'IA générative, automatisation intelligente et data science pour optimiser vos processus métiers.</div>
+      <div class="service-tags"><span class="stag">LLM</span><span class="stag">ML</span><span class="stag">Automation</span><span class="stag">Data</span></div>
+    </div>
+    <div class="service-card reveal reveal-delay-1">
+      <div class="service-num">04</div>
+      <div class="service-icon">🔒</div>
+      <div class="service-name">Cybersécurité</div>
+      <div class="service-desc">Audit de sécurité, tests de pénétration, conformité RGPD et mise en place de stratégies de protection avancées.</div>
+      <div class="service-tags"><span class="stag">Pentest</span><span class="stag">RGPD</span><span class="stag">SOC</span><span class="stag">ISO 27001</span></div>
+    </div>
+    <div class="service-card reveal reveal-delay-2">
+      <div class="service-num">05</div>
+      <div class="service-icon">📊</div>
+      <div class="service-name">Data & Analytics</div>
+      <div class="service-desc">Collecte, traitement et visualisation de vos données pour des décisions stratégiques basées sur des insights concrets.</div>
+      <div class="service-tags"><span class="stag">Power BI</span><span class="stag">ETL</span><span class="stag">Datawarehouse</span></div>
+    </div>
+    <div class="service-card reveal reveal-delay-3">
+      <div class="service-num">06</div>
+      <div class="service-icon">🎯</div>
+      <div class="service-name">Conseil & Stratégie IT</div>
+      <div class="service-desc">Accompagnement stratégique, audit de maturité numérique, schéma directeur SI et conduite du changement.</div>
+      <div class="service-tags"><span class="stag">PMO</span><span class="stag">Agile</span><span class="stag">TOGAF</span><span class="stag">ITIL</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ FEATURES ══════════════ -->
+<section class="features" id="why">
+  <div class="features-grid">
+    <div class="reveal">
+      <div class="section-tag">Pourquoi Pulsar ?</div>
+      <h2 class="section-title">Une expertise au<br><span>service de vos</span><br>ambitions</h2>
+      <p class="section-sub">Nous ne sommes pas de simples prestataires. Nous sommes des partenaires engagés dans votre réussite.</p>
+      <ul class="feature-list" style="margin-top:2.5rem">
+        <li class="feature-item">
+          <div class="feature-icon-box">⚡</div>
+          <div><h4>Rapidité d'exécution</h4><p>Méthodologie agile et équipes dédiées pour des livraisons dans les délais, sans compromis sur la qualité.</p></div>
+        </li>
+        <li class="feature-item">
+          <div class="feature-icon-box">🎯</div>
+          <div><h4>Approche orientée résultats</h4><p>Chaque projet est piloté par des KPIs définis ensemble. Nous mesurons l'impact réel de nos interventions.</p></div>
+        </li>
+        <li class="feature-item">
+          <div class="feature-icon-box">🔄</div>
+          <div><h4>Support continu 24/7</h4><p>Un interlocuteur dédié et un support réactif pour accompagner votre croissance à chaque étape.</p></div>
+        </li>
+      </ul>
+    </div>
+    <div class="reveal reveal-delay-2">
+      <div class="feature-visual">
+        <div class="feature-visual-inner">
+          <div class="feature-ring ring1">
+            <div class="ring-dot rd1"></div>
+          </div>
+          <div class="feature-ring ring2">
+            <div class="ring-dot rd2"></div>
+          </div>
+          <div class="feature-ring ring3">
+            <div class="ring-dot rd3"></div>
+          </div>
+          <div class="ring-center">⚡</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ PROCESS ══════════════ -->
+<section class="process" id="process">
+  <div style="text-align:center;margin-bottom:1rem">
+    <div class="section-tag reveal" style="justify-content:center">Notre méthode</div>
+    <h2 class="section-title reveal" style="text-align:center">Comment nous<br><span>travaillons</span></h2>
+  </div>
+  <div class="process-steps">
+    <div class="process-step reveal reveal-delay-1">
+      <div class="step-circle">01</div>
+      <div class="step-title">Découverte</div>
+      <div class="step-desc">Analyse de vos besoins, audit de l'existant et définition d'une feuille de route claire et réaliste.</div>
+    </div>
+    <div class="process-step reveal reveal-delay-2">
+      <div class="step-circle">02</div>
+      <div class="step-title">Conception</div>
+      <div class="step-desc">Architecture technique, wireframes, choix technologiques et validation de la solution avec vos équipes.</div>
+    </div>
+    <div class="process-step reveal reveal-delay-3">
+      <div class="step-circle">03</div>
+      <div class="step-title">Développement</div>
+      <div class="step-desc">Sprints agiles, livraisons incrémentales et points de contrôle réguliers pour un projet maîtrisé.</div>
+    </div>
+    <div class="process-step reveal reveal-delay-4">
+      <div class="step-circle">04</div>
+      <div class="step-title">Déploiement</div>
+      <div class="step-desc">Mise en production soignée, formation de vos équipes et suivi post-lancement pour garantir le succès.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ PRICING ══════════════ -->
+<section class="pricing" id="pricing">
+  <div class="pricing-header">
+    <div class="section-tag reveal">Tarification</div>
+    <h2 class="section-title reveal">Des offres adaptées à<br><span>chaque ambition</span></h2>
+    <p class="section-sub reveal">Transparence totale sur nos prix. Choisissez l'offre qui correspond à votre projet.</p>
+  </div>
+  <div class="pricing-grid">
+    <div class="price-card reveal reveal-delay-1">
+      <div class="price-plan">Starter</div>
+      <div class="price-value"><sup>€</sup>990<span>/mois</span></div>
+      <div class="price-period">Idéal pour les TPE & startups</div>
+      <div class="price-divider"></div>
+      <ul class="price-features">
+        <li><span class="check">✦</span> Audit numérique initial</li>
+        <li><span class="check">✦</span> Site web vitrine optimisé</li>
+        <li><span class="check">✦</span> Hébergement cloud sécurisé</li>
+        <li><span class="check">✦</span> Support email (48h)</li>
+        <li><span class="check">✦</span> 5h de développement/mois</li>
+        <li class="disabled"><span class="check">✦</span> IA & automatisation</li>
+        <li class="disabled"><span class="check">✦</span> Manager de compte dédié</li>
+      </ul>
+      <a href="#offre" class="btn-plan btn-plan-outline" onclick="selectOffer('starter')">Choisir Starter</a>
+    </div>
+    <div class="price-card featured reveal reveal-delay-2">
+      <div class="featured-badge">Populaire</div>
+      <div class="price-plan">Growth</div>
+      <div class="price-value"><sup>€</sup>2 490<span>/mois</span></div>
+      <div class="price-period">Pour les PME en croissance</div>
+      <div class="price-divider"></div>
+      <ul class="price-features">
+        <li><span class="check">✦</span> Tout le pack Starter</li>
+        <li><span class="check">✦</span> Application web sur mesure</li>
+        <li><span class="check">✦</span> Intégration IA & automatisation</li>
+        <li><span class="check">✦</span> Tableau de bord analytics</li>
+        <li><span class="check">✦</span> 20h de développement/mois</li>
+        <li><span class="check">✦</span> Support prioritaire (4h)</li>
+        <li><span class="check">✦</span> Manager de compte dédié</li>
+      </ul>
+      <a href="#offre" class="btn-plan btn-plan-solid" onclick="selectOffer('growth')">Choisir Growth</a>
+    </div>
+    <div class="price-card reveal reveal-delay-3">
+      <div class="price-plan">Enterprise</div>
+      <div class="price-value" style="font-size:2.5rem">Sur mesure</div>
+      <div class="price-period">Pour les grands groupes</div>
+      <div class="price-divider"></div>
+      <ul class="price-features">
+        <li><span class="check">✦</span> Architecture complète SI</li>
+        <li><span class="check">✦</span> Équipe dédiée full-time</li>
+        <li><span class="check">✦</span> Cybersécurité & conformité</li>
+        <li><span class="check">✦</span> Data warehouse & BI avancé</li>
+        <li><span class="check">✦</span> Développement illimité</li>
+        <li><span class="check">✦</span> SLA garanti 99.9% uptime</li>
+        <li><span class="check">✦</span> CTO as a Service</li>
+      </ul>
+      <a href="#offre" class="btn-plan btn-plan-outline" onclick="selectOffer('enterprise')">Nous contacter</a>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ OFFER FORM ══════════════ -->
+<section class="offer-section" id="offre">
+  <div class="offer-inner">
+    <div class="offer-grid">
+      <div class="reveal">
+        <div class="section-tag">Commencer</div>
+        <h2 class="section-title offer-left">Lancez votre<br>projet <span>dès</span><br><span>aujourd'hui</span></h2>
+        <p style="color:var(--text-muted);margin-top:1.2rem;line-height:1.75;font-size:.95rem">Remplissez ce formulaire et un consultant Pulsar vous contactera sous 24h pour une première consultation <strong style="color:white">100% gratuite</strong>.</p>
+        <div class="offer-perks">
+          <div class="perk"><div class="perk-dot">⚡</div><span>Réponse garantie sous 24h ouvrées</span></div>
+          <div class="perk"><div class="perk-dot">🎯</div><span>Premier audit offert sans engagement</span></div>
+          <div class="perk"><div class="perk-dot">🔒</div><span>Vos données sont confidentielles</span></div>
+          <div class="perk"><div class="perk-dot">💬</div><span>Consultant senior dédié à votre projet</span></div>
+        </div>
+      </div>
+
+      <div class="reveal reveal-delay-2">
+        <div class="offer-form" id="offerFormWrap">
+          <div id="formContent">
+            <div class="form-title">Choisissez votre offre</div>
+            <div class="form-subtitle">Sélectionnez le service qui correspond à vos besoins</div>
+
+            <!-- Offer selector -->
+            <div class="offer-selector">
+              <span class="offer-label">Type de service *</span>
+              <div class="offer-cards">
+                <div class="offer-opt">
+                  <input type="radio" name="offer" id="opt-dev" value="Développement Web & Mobile">
+                  <label for="opt-dev"><span class="opt-icon">🏗️</span><span class="opt-name">Web & Mobile</span><span class="opt-price">Dès 990€/mois</span></label>
+                </div>
+                <div class="offer-opt">
+                  <input type="radio" name="offer" id="opt-cloud" value="Cloud & Infrastructure">
+                  <label for="opt-cloud"><span class="opt-icon">☁️</span><span class="opt-name">Cloud & Infra</span><span class="opt-price">Sur devis</span></label>
+                </div>
+                <div class="offer-opt">
+                  <input type="radio" name="offer" id="opt-ai" value="Intelligence Artificielle">
+                  <label for="opt-ai"><span class="opt-icon">🤖</span><span class="opt-name">IA & Data</span><span class="opt-price">Dès 1500€/mois</span></label>
+                </div>
+                <div class="offer-opt">
+                  <input type="radio" name="offer" id="opt-sec" value="Cybersécurité">
+                  <label for="opt-sec"><span class="opt-icon">🔒</span><span class="opt-name">Cybersécurité</span><span class="opt-price">Sur devis</span></label>
+                </div>
+                <div class="offer-opt">
+                  <input type="radio" name="offer" id="opt-conseil" value="Conseil & Stratégie IT">
+                  <label for="opt-conseil"><span class="opt-icon">🎯</span><span class="opt-name">Conseil IT</span><span class="opt-price">Dès 800€/j</span></label>
+                </div>
+                <div class="offer-opt">
+                  <input type="radio" name="offer" id="opt-enterprise" value="Offre Enterprise">
+                  <label for="opt-enterprise"><span class="opt-icon">🏢</span><span class="opt-name">Enterprise</span><span class="opt-price">Sur mesure</span></label>
+                </div>
+              </div>
+            </div>
+
+            <!-- Plan selector -->
+            <div class="form-group">
+              <label>Forfait souhaité</label>
+              <select id="planSelect">
+                <option value="">Sélectionnez un forfait</option>
+                <option value="Starter — 990€/mois">Starter — 990€/mois</option>
+                <option value="Growth — 2490€/mois">Growth — 2 490€/mois</option>
+                <option value="Enterprise — Sur mesure">Enterprise — Sur mesure</option>
+                <option value="Prestation ponctuelle">Prestation ponctuelle</option>
+              </select>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label>Prénom *</label>
+                <input type="text" id="fname" placeholder="Jean">
+              </div>
+              <div class="form-group">
+                <label>Nom *</label>
+                <input type="text" id="lname" placeholder="Dupont">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Email professionnel *</label>
+                <input type="email" id="email" placeholder="jean@entreprise.com">
+              </div>
+              <div class="form-group">
+                <label>Téléphone</label>
+                <input type="tel" id="phone" placeholder="+33 6 00 00 00 00">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Entreprise *</label>
+                <input type="text" id="company" placeholder="Nom de votre société">
+              </div>
+              <div class="form-group">
+                <label>Secteur d'activité</label>
+                <select id="sector">
+                  <option value="">Choisir</option>
+                  <option>Finance & Banque</option>
+                  <option>Retail & E-commerce</option>
+                  <option>Santé & Médical</option>
+                  <option>Industrie & Manufacture</option>
+                  <option>Éducation & Formation</option>
+                  <option>Services & Consulting</option>
+                  <option>Tech & Startups</option>
+                  <option>Autre</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Décrivez votre projet</label>
+              <textarea id="message" placeholder="Parlez-nous de vos besoins, vos objectifs et votre budget approximatif…"></textarea>
+            </div>
+            <button class="form-submit" id="submitBtn" onclick="submitForm()">
+              <span id="submitText">Envoyer ma demande →</span>
+              <span id="submitLoader" style="display:none">Envoi en cours…</span>
+            </button>
+            <p class="form-note">🔒 Vos informations sont strictement confidentielles et ne seront jamais revendues.</p>
+          </div>
+
+          <!-- Success state -->
+          <div class="form-success" id="formSuccess">
+            <div class="success-icon">🎉</div>
+            <h3>Demande envoyée avec succès !</h3>
+            <p>Un consultant Pulsar vous contactera dans les <strong>24 heures</strong> pour un premier échange gratuit.</p>
+            <p style="margin-top:1rem;font-size:.8rem;color:var(--text-muted)">Vérifiez votre boîte mail (et vos spams).</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ TESTIMONIALS ══════════════ -->
+<section class="testimonials" id="testi">
+  <div class="testi-header">
+    <div>
+      <div class="section-tag reveal">Témoignages</div>
+      <h2 class="section-title reveal">Ce que disent<br><span>nos clients</span></h2>
+    </div>
+  </div>
+  <div class="testi-grid">
+    <div class="testi-card reveal reveal-delay-1">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-text">"Pulsar a transformé notre infrastructure en 3 mois. Leur expertise cloud et leur réactivité sont exceptionnelles. On a gagné 40% de performance."</p>
+      <div class="testi-author">
+        <div class="testi-avatar av1">SL</div>
+        <div><div class="testi-name">Sophie Laurent</div><div class="testi-role">CTO, NexoTech</div></div>
+      </div>
+    </div>
+    <div class="testi-card reveal reveal-delay-2">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-text">"L'intégration IA dans notre CRM a automatisé 70% de nos tâches répétitives. ROI atteint en moins de 6 mois. Équipe top, à l'écoute du besoin."</p>
+      <div class="testi-author">
+        <div class="testi-avatar av2">MK</div>
+        <div><div class="testi-name">Marc Kowalski</div><div class="testi-role">Directeur Digital, AtlaGroup</div></div>
+      </div>
+    </div>
+    <div class="testi-card reveal reveal-delay-3">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-text">"Audit cybersécurité rigoureux et mise en conformité RGPD menée en moins de 2 mois. Pulsar, c'est le partenaire de confiance qu'on cherchait depuis longtemps."</p>
+      <div class="testi-author">
+        <div class="testi-avatar av3">AB</div>
+        <div><div class="testi-name">Alice Benali</div><div class="testi-role">RSSI, Meridian Finance</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ FAQ ══════════════ -->
+<section class="faq" id="faq">
+  <div class="faq-inner">
+    <div class="faq-header">
+      <div class="section-tag reveal" style="justify-content:center">FAQ</div>
+      <h2 class="section-title reveal" style="text-align:center">Questions <span>fréquentes</span></h2>
+      <p class="section-sub reveal" style="text-align:center">Tout ce que vous devez savoir avant de démarrer.</p>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item">
+        <div class="faq-q">Combien de temps dure un projet type ?<span class="faq-icon">+</span></div>
+        <div class="faq-a"><div class="faq-a-inner">Cela dépend de la complexité. Un site vitrine est livré en 3 à 6 semaines. Une application web sur mesure prend généralement de 2 à 6 mois. Nous vous donnons un calendrier précis dès la phase de découverte.</div></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Est-il possible de commencer sans engagement long terme ?<span class="faq-icon">+</span></div>
+        <div class="faq-a"><div class="faq-a-inner">Oui, nos offres Starter et Growth sont sans engagement minimum d'un an. Vous pouvez commencer par une prestation ponctuelle pour tester notre collaboration avant de s'engager sur un contrat mensuel.</div></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Travaillez-vous avec des entreprises hors de France ?<span class="faq-icon">+</span></div>
+        <div class="faq-a"><div class="faq-a-inner">Absolument. Nous intervenons en France, au Maghreb et dans toute l'Europe francophone. Nos équipes maîtrisent le travail à distance et nous adaptons nos horaires aux fuseaux horaires de nos clients.</div></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Que se passe-t-il après la livraison du projet ?<span class="faq-icon">+</span></div>
+        <div class="faq-a"><div class="faq-a-inner">Nous proposons des contrats de maintenance et de support adaptés à chaque projet. Vous pouvez également bénéficier de formations pour rendre vos équipes autonomes sur les outils livrés.</div></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Vous occupez-vous aussi de l'hébergement et de la sécurité ?<span class="faq-icon">+</span></div>
+        <div class="faq-a"><div class="faq-a-inner">Oui, nous proposons une gestion complète : hébergement cloud haute disponibilité, sauvegardes automatiques, surveillance 24/7 et mises à jour de sécurité régulières. Vous n'avez à vous occuper de rien.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ CTA BANNER ══════════════ -->
+<div class="cta-banner reveal">
+  <h2>Prêt à faire décoller votre<br>transformation digitale ?</h2>
+  <p>Rejoignez plus de 200 entreprises qui font confiance à Pulsar pour leur avenir numérique.</p>
+  <a href="#offre" class="btn-white">Démarrer maintenant →</a>
+</div>
+
+<!-- ══════════════ FOOTER ══════════════ -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="footer-brand">PULSAR <span>Consulting.</span></div>
+      <p class="footer-desc">Entreprise de Services du Numérique spécialisée dans la transformation digitale, le développement logiciel et le conseil IT.</p>
+      <div class="footer-social">
+        <a href="#" class="soc-btn">in</a>
+        <a href="#" class="soc-btn">tw</a>
+        <a href="#" class="soc-btn">gh</a>
+        <a href="#" class="soc-btn">yt</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <ul>
+        <li><a href="#">Développement Web</a></li>
+        <li><a href="#">Applications Mobiles</a></li>
+        <li><a href="#">Cloud & DevOps</a></li>
+        <li><a href="#">IA & Machine Learning</a></li>
+        <li><a href="#">Cybersécurité</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Entreprise</h4>
+      <ul>
+        <li><a href="#">À propos</a></li>
+        <li><a href="#">Notre équipe</a></li>
+        <li><a href="#">Nos références</a></li>
+        <li><a href="#">Blog & Insights</a></li>
+        <li><a href="#">Carrières</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <ul>
+        <li><a href="mailto:contact@pulsar-consulting.fr">contact@pulsar-consulting.fr</a></li>
+        <li><a href="tel:+33100000000">+33 1 00 00 00 00</a></li>
+        <li><a href="#">Paris, France</a></li>
+        <li><a href="#">Mentions légales</a></li>
+        <li><a href="#">Politique de confidentialité</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 Pulsar Consulting. Tous droits réservés.</p>
+    <div class="footer-badges">
+      <span class="badge">ISO 27001</span>
+      <span class="badge">RGPD Conforme</span>
+      <span class="badge">Expert Bpifrance</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ══════════════ JS ══════════════ -->
+<script>
+// Cursor
+const cur = document.getElementById('cur'), cur2 = document.getElementById('cur2');
+let mx=0,my=0,fx=0,fy=0;
+document.addEventListener('mousemove',e=>{
+  mx=e.clientX;my=e.clientY;
+  cur.style.left=mx+'px';cur.style.top=my+'px';
+});
+(function anim(){fx+=(mx-fx)*.13;fy+=(my-fy)*.13;cur2.style.left=fx+'px';cur2.style.top=fy+'px';requestAnimationFrame(anim);})();
+document.querySelectorAll('a,button,.service-card,.price-card,.testi-card,.faq-q,.offer-opt label,.feature-item,.process-step,input,select,textarea').forEach(el=>{
+  el.addEventListener('mouseenter',()=>document.body.classList.add('hov'));
+  el.addEventListener('mouseleave',()=>document.body.classList.remove('hov'));
+});
+
+// Nav scroll
+const nav = document.getElementById('mainNav');
+window.addEventListener('scroll',()=>{
+  nav.classList.toggle('scrolled',window.scrollY>60);
+});
+
+// Reveal on scroll
+const revealEls = document.querySelectorAll('.reveal');
+const obs = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); obs.unobserve(e.target); } });
+},{threshold:.1});
+revealEls.forEach(el=>obs.observe(el));
+
+// Hamburger
+const ham = document.getElementById('hamburger'), mm = document.getElementById('mobileMenu');
+ham.addEventListener('click',()=>mm.classList.toggle('open'));
+document.querySelectorAll('.mm-link').forEach(l=>l.addEventListener('click',()=>mm.classList.remove('open')));
+
+// FAQ accordion
+document.querySelectorAll('.faq-q').forEach(q=>{
+  q.addEventListener('click',()=>{
+    const item = q.closest('.faq-item');
+    const wasOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(i=>i.classList.remove('open'));
+    if(!wasOpen) item.classList.add('open');
+  });
+});
+
+// Select offer from pricing cards
+window.selectOffer = function(plan){
+  const map = {starter:'Starter — 990€/mois',growth:'Growth — 2490€/mois',enterprise:'Enterprise — Sur mesure'};
+  const sel = document.getElementById('planSelect');
+  if(sel) sel.value = map[plan]||'';
+  const el = document.getElementById('offre');
+  if(el){el.scrollIntoView({behavior:'smooth'});}
+};
+
+// Pre-select offer from URL hash or direct click
+window.addEventListener('load',()=>{
+  if(window.location.hash==='#offre'){
+    const first = document.getElementById('opt-dev');
+    if(first) first.checked=true;
+  }
+});
+
+// Form submit
+window.submitForm = function(){
+  const fname = document.getElementById('fname').value.trim();
+  const lname = document.getElementById('lname').value.trim();
+  const email = document.getElementById('email').value.trim();
+  const company = document.getElementById('company').value.trim();
+  const offer = document.querySelector('input[name="offer"]:checked');
+
+  if(!fname||!lname||!email||!company){
+    const missing = [];
+    if(!fname) missing.push('Prénom');
+    if(!lname) missing.push('Nom');
+    if(!email) missing.push('Email');
+    if(!company) missing.push('Entreprise');
+    alert('Veuillez remplir les champs obligatoires : '+missing.join(', '));
+    return;
+  }
+  if(!email.includes('@')||!email.includes('.')){
+    alert('Veuillez entrer une adresse email valide.');
+    return;
+  }
+  if(!offer){
+    alert('Veuillez sélectionner un type de service.');
+    return;
+  }
+
+  const btn = document.getElementById('submitBtn');
+  const txt = document.getElementById('submitText');
+  const ldr = document.getElementById('submitLoader');
+  btn.disabled=true; txt.style.display='none'; ldr.style.display='inline';
+
+  setTimeout(()=>{
+    document.getElementById('formContent').style.display='none';
+    document.getElementById('formSuccess').style.display='block';
+  }, 1800);
+};
+</script>
+</body>
+</html>
